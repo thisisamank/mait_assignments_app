@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "28467678232",
+    "project_id": "mait-assignment-app",
+    "storage_bucket": "mait-assignment-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:28467678232:android:e91aadb45ece15c129076d",
+        "android_client_info": {
+          "package_name": "com.visnstudios.mait_assignments_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "28467678232-gacjedhemqn16sep3car5r6ulguiia40.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBG-SQOkCcXnjLK4TXrP6SGPf5bXeQvgU8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "28467678232-gacjedhemqn16sep3car5r6ulguiia40.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
