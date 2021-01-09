@@ -3,24 +3,19 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:mait_assignments_app/data/models/user_repository.dart';
+import 'package:mait_assignments_app/repository/user_repository.dart';
 
 part 'authentication_event.dart';
 part 'authentication_state.dart';
 
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
+  AuthenticationBloc(this._userRepository) : super(UnInitialziedAuthState());
   final UserRepository _userRepository;
-  AuthenticationBloc({@required UserRepository userRepository})
-      : assert(userRepository != null),
-        _userRepository = userRepository,
-        super(UninitializedAuthState());
-  @override
-  AuthenticationState get initialState => UninitializedAuthState();
+
   @override
   Stream<AuthenticationState> mapEventToState(
-    AuthenticationEvent event,
-  ) async* {
+      AuthenticationEvent event) async* {
     if (event is AppStarted) {
       yield* _mapAppStartedToState();
     } else if (event is LoggedIn) {
@@ -32,24 +27,24 @@ class AuthenticationBloc
 
   Stream<AuthenticationState> _mapAppStartedToState() async* {
     try {
-      final isSignIn = await _userRepository.isSignedIn();
-      if (isSignIn) {
+      final isSignedIn = await _userRepository.isSignedIn();
+      if (isSignedIn) {
         final name = await _userRepository.getUser();
-        yield UserAuthSuccessState(username: name);
+        yield AuthenticatedAuthState(user: name);
       } else {
-        yield UserAuthFailState();
+        yield UnAuthenticatedAuthState();
       }
     } catch (_) {
-      yield UserAuthFailState();
+      yield UnAuthenticatedAuthState();
     }
   }
 
   Stream<AuthenticationState> _mapLoggedInToState() async* {
-    yield UserAuthSuccessState(username: await _userRepository.getUser());
+    yield AuthenticatedAuthState(user: await _userRepository.getUser());
   }
 
   Stream<AuthenticationState> _mapLoggedOutToState() async* {
-    yield UserAuthFailState();
+    yield UnAuthenticatedAuthState();
     _userRepository.signOut();
   }
 }

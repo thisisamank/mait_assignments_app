@@ -27,7 +27,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               color: AppColors.kPrimaryColor,
             ),
             MaterialButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, '/studentLogin');
+              },
               child: Text(
                 "Login as a Student ",
                 style: AppStyles.kButtonTextStyle(
