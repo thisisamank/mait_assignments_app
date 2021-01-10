@@ -15,7 +15,7 @@ class LoginWithCredentials extends LoginEvent {
   List<Object> get props => [email, password];
 }
 
-class LoginWithGoogleEvent extends LoginEvent {
+class LoginWithGoogle extends LoginEvent {
   @override
   List<Object> get props => [];
 }

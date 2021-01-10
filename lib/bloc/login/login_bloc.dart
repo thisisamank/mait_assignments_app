@@ -3,18 +3,19 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:mait_assignments_app/repository/user_repository.dart';
+import 'package:mait_assignments_app/data/model/user.dart';
+import 'package:mait_assignments_app/data/repository/user_repository.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  LoginBloc(this._userRepository) : super(LoginEmptyState());
+  LoginBloc(this._userRepository) : super(LoginInitial());
 
   UserRepository _userRepository;
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) async* {
-    if (event is LoginWithGoogleEvent) {
+    if (event is LoginWithGoogle) {
       yield* _mapLoginWithGooglePressedToState();
     } else if (event is LoginWithCredentials) {
       yield* _mapLoginWithCredentialsPressedToState(
@@ -27,9 +28,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   Stream<LoginState> _mapLoginWithGooglePressedToState() async* {
     try {
       await _userRepository.signInWithGoogle();
-      yield LoginSuccessState(name: (_userRepository.getUserName()));
+      yield LoginSuccess(user: await _userRepository.getUser());
     } catch (_) {
-      yield LoginFailureState();
+      yield LoginFailure();
     }
   }
 
@@ -37,12 +38,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     String email,
     String password,
   }) async* {
-    yield LoginLoadingState();
+    yield LoginLoading();
     try {
       await _userRepository.signInWithCredentials(email, password);
-      yield LoginSuccessState(name: _userRepository.getUserName());
+      yield LoginSuccess(user: await _userRepository.getUser());
     } catch (_) {
-      yield LoginFailureState();
+      yield LoginFailure();
     }
   }
 }

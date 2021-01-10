@@ -2,13 +2,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mait_assignments_app/bloc/login/login_bloc.dart';
-import 'package:mait_assignments_app/repository/user_repository.dart';
 import 'package:mait_assignments_app/screens/home_screen.dart';
+import 'package:mait_assignments_app/screens/login/teacher_login.dart';
 import 'package:mait_assignments_app/screens/on_boarding_screen.dart';
 import 'package:mait_assignments_app/screens/splash.dart';
 import 'package:mait_assignments_app/screens/student_login.dart';
 
 import 'bloc/auth/authentication_bloc.dart';
+import 'data/repository/user_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,15 +35,20 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<AuthenticationBloc>(
-      create: (context) => AuthenticationBloc(userRepository),
+      create: (context) => _authenticationBloc,
       child: MaterialApp(
         routes: {
+          '/home':(newContext) => HomeScreen(),
           '/': (newContext) => App(),
           '/splash': (newContext) => SplashScreen(),
           '/login': (newContext) => OnBoardingScreen(),
           '/studentLogin': (newContext) => BlocProvider<LoginBloc>(
                 create: (newContext) => LoginBloc(userRepository),
                 child: StudentLogin(),
+              ),
+          '/teacherLogin': (newContext) => BlocProvider<LoginBloc>(
+                create: (newContext) => LoginBloc(userRepository),
+                child: TeacherLogin(),
               ),
         },
       ),
@@ -58,7 +64,7 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   @override
   void initState() {
-    BlocProvider.of<AuthenticationBloc>(context).add(AppStarted());
+    BlocProvider.of<AuthenticationBloc>(context).add(AuthenticationStarted());
     super.initState();
   }
 
@@ -66,12 +72,13 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
       builder: (context, state) {
-        if (state is AuthenticatedAuthState) {
-          return SplashScreen();
-        } else if (state is UnAuthenticatedAuthState) {
+        if (state is AuthenticationSuccess) {
+
+          return HomeScreen(user: state.user);
+        } else if (state is AuthenticationFailure) {
           return OnBoardingScreen();
         } else {
-          return Text("Something Went Wrong");
+          return OnBoardingScreen();
         }
       },
     );

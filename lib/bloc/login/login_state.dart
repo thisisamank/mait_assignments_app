@@ -7,24 +7,24 @@ abstract class LoginState extends Equatable {
   List<Object> get props => [];
 }
 
-class LoginEmptyState extends LoginState {
+class LoginInitial extends LoginState {
   @override
   List<Object> get props => [];
 }
 
-class LoginLoadingState extends LoginState {
+class LoginLoading extends LoginState {
   @override
   List<Object> get props => [];
 }
 
-class LoginFailureState extends LoginState {
+class LoginFailure extends LoginState {
   @override
   List<Object> get props => [];
 }
 
-class LoginSuccessState extends LoginState {
-  final name;
-  LoginSuccessState({this.name});
+class LoginSuccess extends LoginState {
+  final UserModel user;
+  LoginSuccess({this.user});
   @override
-  List<Object> get props => [name];
+  List<Object> get props => [user];
 }

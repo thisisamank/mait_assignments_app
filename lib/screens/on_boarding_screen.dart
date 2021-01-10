@@ -17,7 +17,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             MaterialButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, '/teacherLogin');
+              },
               child: Text(
                 "Login as a Teacher",
                 style: AppStyles.kButtonTextStyle(
