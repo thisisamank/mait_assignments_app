@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mait_assignments_app/bloc/login/login_bloc.dart';
+import 'package:mait_assignments_app/data/provider/firebase_provider.dart';
 import 'package:mait_assignments_app/screens/home_screen.dart';
 import 'package:mait_assignments_app/screens/login/teacher_login.dart';
 import 'package:mait_assignments_app/screens/on_boarding_screen.dart';
@@ -28,7 +30,9 @@ class _MyAppState extends State<MyApp> {
   LoginBloc _loginBloc;
   @override
   void initState() {
+
     _authenticationBloc = AuthenticationBloc(userRepository);
+
     super.initState();
   }
 
