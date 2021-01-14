@@ -1,15 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mait_assignments_app/data/model/sections.dart';
+import 'package:mait_assignments_app/data/model/student.dart';
+import 'package:mait_assignments_app/data/provider/user_provider.dart';
 
 class FirebaseProvider {
   FirebaseFirestore _firestoreInstance;
-
+  UserProvider _userProvider;
   Query _query;
 
   FirebaseProvider({FirebaseFirestore firestore})
-      : this._firestoreInstance = firestore ?? FirebaseFirestore.instance;
+      : this._firestoreInstance = firestore ?? FirebaseFirestore.instance,
+        _userProvider = UserProvider();
 
-  getSections() async {
+  Future<List<Section>> getSections() async {
     List<Section> list = List<Section>();
     _query = _firestoreInstance.collection('class');
     final responseDoc = await _query.get();
@@ -21,4 +24,40 @@ class FirebaseProvider {
     }
     return list;
   }
+
+  void regsiterStudent(Map<String, dynamic> student) async {
+    final user = await _userProvider.getUser();
+    final studentId = user.uid;
+    final name = user.displayName;
+    print('name is $name');
+    student['name']=name;
+    student['year']=1;
+    student['name']=name;
+
+    await _firestoreInstance
+        .collection('students')
+        .doc(studentId)
+        .collection('assignment')
+        .doc()
+        .set({});
+    await _firestoreInstance.collection('students').doc(studentId).set(student);
+  }
 }
+
+// email
+// "22"
+// roll
+// "333"
+// section
+// "H1"
+// "ITE"
+// email
+// "hhhh@gmail.com"
+// name
+// "Aman"
+// roll
+// "a1wd2"
+// section
+// "h1"
+// year
+// 1

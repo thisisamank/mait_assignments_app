@@ -27,3 +27,18 @@ class StudentSectionFailure extends StudentsInitial {
   @override
   List<Object> get props {}
 }
+
+class StudentRegisterSucess extends StudentsInitial {
+  @override
+  List<Object> get props {}
+}
+
+class StudentRegisterLoading extends StudentsInitial {
+  @override
+  List<Object> get props {}
+}
+
+class StudentRegisterFailure extends StudentsInitial {
+  @override
+  List<Object> get props {}
+}

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mait_assignments_app/bloc/auth/authentication_bloc.dart';
 import 'package:mait_assignments_app/bloc/login/login_bloc.dart';
 import 'package:mait_assignments_app/config/config.dart';
-import 'package:mait_assignments_app/data/model/user.dart';
 import 'package:mait_assignments_app/widgets/global_widgets.dart';
 
 class StudentLogin extends StatefulWidget {
@@ -12,10 +10,8 @@ class StudentLogin extends StatefulWidget {
 }
 
 class _StudentLoginState extends State<StudentLogin> {
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppWidgets.getAppBar(),
       body: Center(
@@ -50,10 +46,10 @@ class _StudentLoginState extends State<StudentLogin> {
               child: CircularProgressIndicator(),
             );
           } else if (state is LoginSuccess) {
-            Navigator.pushNamed(context, '/home',arguments: state.user);
+            Navigator.pushNamed(context, '/home', arguments: state.user);
             return Text("Logged In");
           } else {
-            return Text("Error !!!!!!!!!!!!!!!!!");
+            return Text("Error !");
           }
         }),
       ),

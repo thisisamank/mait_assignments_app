@@ -16,15 +16,24 @@ class StudentsBloc extends Bloc<StudentsEvent, StudentsState> {
 
   @override
   Stream<StudentsState> mapEventToState(StudentsEvent event) async* {
+
     if (event is StudentSectionInitial) {
-      _mapStudentSucessInitial();
+      try {
+        yield StudentSectionLoading();
+        List<Section> sections = await _repository.getSections();
+        yield StudentSectionsLoaded(section: sections);
+      } catch (_) {
+        yield StudentSectionFailure();
+      }
+    } else if (event is StudentRegisterInitial) {
+      try {
+        yield StudentRegisterLoading();
+        Map<String, dynamic> student = event.student;
+        _repository.registerStudents(student);
+        yield StudentRegisterSucess();
+      } catch (_) {
+        yield StudentRegisterFailure();
+      }
     }
-  }
-
-  _mapStudentSucessInitial() async*{
-    yield StudentSectionLoading();
-
-    List<Section> sections =_repository.getSections();
-    yield StudentSectionsLoaded(section: sections);
   }
 }
