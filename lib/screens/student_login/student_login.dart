@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mait_assignments_app/bloc/login/login_bloc.dart';
 import 'package:mait_assignments_app/config/config.dart';
+import 'package:mait_assignments_app/logic/bloc/login/login_bloc.dart';
 import 'package:mait_assignments_app/widgets/global_widgets.dart';
 
 class StudentLogin extends StatefulWidget {

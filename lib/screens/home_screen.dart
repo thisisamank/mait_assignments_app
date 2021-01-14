@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mait_assignments_app/bloc/auth/authentication_bloc.dart';
+import 'file:///C:/Users/Aman%20Kumar/Desktop/projects/mait_assignments_app/lib/logic/cubits/bloc/auth/authentication_bloc.dart';
 import 'package:mait_assignments_app/data/model/user.dart';
 import 'package:mait_assignments_app/data/provider/firebase_provider.dart';
 

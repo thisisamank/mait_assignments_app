@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:mait_assignments_app/data/model/user.dart';
 import 'package:mait_assignments_app/data/repository/user_repository.dart';
 

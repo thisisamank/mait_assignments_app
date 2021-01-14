@@ -14,6 +14,6 @@ class FirebaseRepository {
   }
 
   void registerStudents(Map<String, dynamic> student) {
-    _provider.regsiterStudent(student);
+    _provider.registerStudent(student);
   }
 }

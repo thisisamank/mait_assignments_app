@@ -1,27 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mait_assignments_app/bloc/student_register/students_bloc.dart';
 import 'package:mait_assignments_app/config/config.dart';
 import 'package:mait_assignments_app/data/model/sections.dart';
-import 'package:mait_assignments_app/data/model/student.dart';
+import 'package:mait_assignments_app/logic/cubits/register_student/register_students_cubit.dart';
+import 'package:mait_assignments_app/logic/cubits/sections/sections_cubit.dart';
 import 'package:mait_assignments_app/widgets/global_widgets.dart';
 import 'package:toast/toast.dart';
 
-class StudentRegistration extends StatefulWidget {
+class RegisterStudentScreen extends StatefulWidget {
   @override
-  _StudentRegistrationState createState() => _StudentRegistrationState();
+  _RegisterStudentScreenState createState() => _RegisterStudentScreenState();
 }
 
-class _StudentRegistrationState extends State<StudentRegistration> {
+class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
   Map<String, dynamic> _studentMap = {};
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _rollControlller = TextEditingController();
+
   //final TextEditingController _branch = TextEditingController();
 
   @override
   void initState() {
-    BlocProvider.of<StudentsBloc>(context).add(StudentSectionInitial());
+    BlocProvider.of<SectionsCubit>(context).getSection();
     super.initState();
   }
 
@@ -47,8 +48,8 @@ class _StudentRegistrationState extends State<StudentRegistration> {
                   final rollNo = _rollControlller.text;
                   _studentMap['email'] = emailId;
                   _studentMap['roll'] = rollNo;
-                  BlocProvider.of<StudentsBloc>(context)
-                      .add(StudentRegisterInitial(_studentMap));
+                  BlocProvider.of<RegisterStudentsCubit>(context)
+                      .registerStudent(_studentMap);
                 },
                 child: Text("Register"),
               )
@@ -62,7 +63,7 @@ class _StudentRegistrationState extends State<StudentRegistration> {
   Container _sectionDialogBox() {
     return Container(
       padding: EdgeInsets.all(20.0),
-      child: BlocBuilder<StudentsBloc, StudentsState>(
+      child: BlocBuilder<SectionsCubit, SectionsState>(
         builder: (context, state) {
           if (state is StudentSectionLoading) {
             return CircularProgressIndicator();

@@ -25,7 +25,7 @@ class FirebaseProvider {
     return list;
   }
 
-  void regsiterStudent(Map<String, dynamic> student) async {
+  void registerStudent(Map<String, dynamic> student) async {
     final user = await _userProvider.getUser();
     final studentId = user.uid;
     final name = user.displayName;
@@ -44,20 +44,3 @@ class FirebaseProvider {
   }
 }
 
-// email
-// "22"
-// roll
-// "333"
-// section
-// "H1"
-// "ITE"
-// email
-// "hhhh@gmail.com"
-// name
-// "Aman"
-// roll
-// "a1wd2"
-// section
-// "h1"
-// year
-// 1

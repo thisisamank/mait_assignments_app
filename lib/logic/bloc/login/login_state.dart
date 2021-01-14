@@ -24,7 +24,9 @@ class LoginFailure extends LoginState {
 
 class LoginSuccess extends LoginState {
   final UserModel user;
+
   LoginSuccess({this.user});
+
   @override
   List<Object> get props => [user];
 }

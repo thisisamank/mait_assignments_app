@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mait_assignments_app/config/routes.dart';
 import 'package:mait_assignments_app/screens/on_boarding_screen.dart';
-import 'package:mait_assignments_app/screens/student_register.dart';
+import 'file:///C:/Users/Aman%20Kumar/Desktop/projects/mait_assignments_app/lib/screens/student_login/student_register.dart';
 
-import 'bloc/auth/authentication_bloc.dart';
+import 'logic/cubits/bloc/auth/authentication_bloc.dart';
 import 'bloc/student_register/students_bloc.dart';
 import 'data/repository/user_repository.dart';
 
@@ -63,7 +63,7 @@ class _AppState extends State<App> {
         if (state is AuthenticationSuccess) {
           return BlocProvider<StudentsBloc>(
             create: (context) => StudentsBloc(),
-            child: StudentRegistration(),
+            child: RegisterStudentScreen(),
           );
         } else if (state is AuthenticationFailure) {
           return OnBoardingScreen();

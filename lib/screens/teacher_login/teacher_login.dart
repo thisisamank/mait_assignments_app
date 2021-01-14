@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:mait_assignments_app/bloc/login/login_bloc.dart';
+import 'file:///C:/Users/Aman%20Kumar/Desktop/projects/mait_assignments_app/lib/logic/cubits/bloc/login/login_bloc.dart';
 import 'package:toast/toast.dart';
 
 class TeacherLogin extends StatefulWidget {
