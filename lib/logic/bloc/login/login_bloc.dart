@@ -3,15 +3,17 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:mait_assignments_app/data/model/user.dart';
-import 'package:mait_assignments_app/data/repository/user_repository.dart';
+import 'package:mait_assignments_app/data/provider/user_provider.dart';
 
 part 'login_event.dart';
+
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  LoginBloc(this._userRepository) : super(LoginInitial());
+  LoginBloc() : super(LoginInitial());
 
-  UserRepository _userRepository;
+  UserProvider _userProvider = UserProvider();
+
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) async* {
     if (event is LoginWithGoogle) {
@@ -26,8 +28,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   Stream<LoginState> _mapLoginWithGooglePressedToState() async* {
     try {
-      await _userRepository.signInWithGoogle();
-      yield LoginSuccess(user: await _userRepository.getUser());
+      await _userProvider.signInWithGoogle();
+      yield LoginSuccess(user: _userProvider.getUserModel());
     } catch (_) {
       yield LoginFailure();
     }
@@ -39,8 +41,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }) async* {
     yield LoginLoading();
     try {
-      await _userRepository.signInWithCredentials(email, password);
-      yield LoginSuccess(user: await _userRepository.getUser());
+      await _userProvider.signInWithCredentials(email, password);
+      yield LoginSuccess(user: _userProvider.getUserModel());
     } catch (_) {
       yield LoginFailure();
     }

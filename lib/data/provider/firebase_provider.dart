@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:mait_assignments_app/data/model/sections.dart';
-import 'package:mait_assignments_app/data/model/student.dart';
+import 'package:mait_assignments_app/data/model/subjects.dart';
 import 'package:mait_assignments_app/data/provider/user_provider.dart';
 
 class FirebaseProvider {
@@ -30,9 +31,9 @@ class FirebaseProvider {
     final studentId = user.uid;
     final name = user.displayName;
     print('name is $name');
-    student['name']=name;
-    student['year']=1;
-    student['name']=name;
+    student['name'] = name;
+    student['year'] = 1;
+    student['name'] = name;
 
     await _firestoreInstance
         .collection('students')
@@ -42,5 +43,16 @@ class FirebaseProvider {
         .set({});
     await _firestoreInstance.collection('students').doc(studentId).set(student);
   }
-}
 
+  getSubjects({@required final String sectionName}) async {
+    final respDoc = await _firestoreInstance
+        .collection('classes')
+        .doc(sectionName)
+        .collection('subjects')
+        .get();
+    List<Subject> _subjects = List<Subject>();
+    for (final doc in respDoc.docs) {
+      Subject subject = Subject(name: doc['sub'], id: doc.id);
+    }
+  }
+}

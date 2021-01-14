@@ -4,15 +4,16 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:mait_assignments_app/data/model/user.dart';
-import 'package:mait_assignments_app/data/repository/user_repository.dart';
+import 'package:mait_assignments_app/data/provider/user_provider.dart';
 
 part 'authentication_event.dart';
+
 part 'authentication_state.dart';
 
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
-  AuthenticationBloc(this._userRepository) : super(AuthenticationInitial());
-  final UserRepository _userRepository;
+  AuthenticationBloc() : super(AuthenticationInitial());
+  final UserProvider _userProvider = UserProvider();
 
   @override
   Stream<AuthenticationState> mapEventToState(
@@ -28,9 +29,9 @@ class AuthenticationBloc
 
   Stream<AuthenticationState> _mapStartedToState() async* {
     try {
-      final isSignedIn = await _userRepository.isSignedIn();
+      final isSignedIn = await _userProvider.isSignedIn();
       if (isSignedIn) {
-        final name = await _userRepository.getUser();
+        final name = _userProvider.getUserModel();
         yield AuthenticationSuccess(user: name);
       } else {
         yield AuthenticationFailure();
@@ -41,11 +42,11 @@ class AuthenticationBloc
   }
 
   Stream<AuthenticationState> _mapLoggedInToState() async* {
-    yield AuthenticationSuccess(user: await _userRepository.getUser());
+    yield AuthenticationSuccess(user: _userProvider.getUserModel());
   }
 
   Stream<AuthenticationState> _mapLoggedOutToState() async* {
     yield AuthenticationFailure();
-    _userRepository.signOut();
+    _userProvider.signOut();
   }
 }

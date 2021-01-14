@@ -103,7 +103,7 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
     return TextFormField(
       controller: _emailController,
       validator: (value) {
-        if ((value.contains("@aspc.mait.ac.in") ||
+        if (!(value.contains("@aspc.mait.ac.in") ||
             value.contains("@cse.mait.ac.in"))) {
           return "Enter email provided by College!";
         }

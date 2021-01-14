@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mait_assignments_app/config/routes.dart';
 import 'package:mait_assignments_app/screens/on_boarding_screen.dart';
-import 'file:///C:/Users/Aman%20Kumar/Desktop/projects/mait_assignments_app/lib/screens/student_login/student_register.dart';
+import 'package:mait_assignments_app/screens/subjects/subject_screen.dart';
 
-import 'logic/cubits/bloc/auth/authentication_bloc.dart';
-import 'bloc/student_register/students_bloc.dart';
-import 'data/repository/user_repository.dart';
+import 'logic/bloc/auth/authentication_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,15 +19,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  UserRepository userRepository = UserRepository();
   AuthenticationBloc _authenticationBloc;
 
   @override
   void initState() {
-
-
-
-    _authenticationBloc = AuthenticationBloc(userRepository);
+    _authenticationBloc = AuthenticationBloc();
     super.initState();
   }
 
@@ -38,7 +32,7 @@ class _MyAppState extends State<MyApp> {
     return BlocProvider<AuthenticationBloc>(
       create: (context) => _authenticationBloc,
       child: MaterialApp(
-        routes: getRoutes(userRepository),
+        routes: getRoutes(),
       ),
     );
   }
@@ -61,10 +55,7 @@ class _AppState extends State<App> {
     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
       builder: (context, state) {
         if (state is AuthenticationSuccess) {
-          return BlocProvider<StudentsBloc>(
-            create: (context) => StudentsBloc(),
-            child: RegisterStudentScreen(),
-          );
+          return SubjectScreen();
         } else if (state is AuthenticationFailure) {
           return OnBoardingScreen();
         } else {
