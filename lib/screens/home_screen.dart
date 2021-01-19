@@ -5,7 +5,7 @@ import 'package:mait_assignments_app/logic/bloc/auth/authentication_bloc.dart';
 
 class HomeScreen extends StatelessWidget {
 
-  UserModel user;
+  final UserModel user;
   HomeScreen({this.user});
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class HomeScreen extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
-          Center(child: Text('Welcome! ${name}')),
+          Center(child: Text('Welcome! $name')),
         ],
       ),
     );

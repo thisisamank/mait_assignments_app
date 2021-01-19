@@ -1,7 +1,3 @@
-import 'dart:convert';
-
-import 'package:flutter/foundation.dart';
-
 import 'package:mait_assignments_app/data/model/assignments.dart';
 
 class Student {
@@ -13,14 +9,16 @@ class Student {
   int year;
   String branch;
   String uid;
-  Student(
-      {this.section,
-      this.email,
-      this.name,
-      this.roll,
-      this.year,
-      this.branch,
-      this.uid});
+
+  Student({
+    this.section,
+    this.email,
+    this.name,
+    this.roll,
+    this.year,
+    this.branch,
+    this.uid,
+  });
 
   factory Student.fromMap(Map<String, dynamic> studentMap) {
     final emailId = studentMap['email'];

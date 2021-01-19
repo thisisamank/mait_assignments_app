@@ -45,6 +45,10 @@ class FirebaseProvider {
   }
 
   getSubjects({@required final String sectionName}) async {
+    final user = await _userProvider.getUser();
+    final studentId = user.uid;
+
+    //final sectionName =
     final respDoc = await _firestoreInstance
         .collection('classes')
         .doc(sectionName)
@@ -53,6 +57,8 @@ class FirebaseProvider {
     List<Subject> _subjects = List<Subject>();
     for (final doc in respDoc.docs) {
       Subject subject = Subject(name: doc['sub'], id: doc.id);
+      _subjects.add(subject);
     }
+    return _subjects;
   }
 }

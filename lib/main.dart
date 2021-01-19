@@ -28,6 +28,12 @@ class _MyAppState extends State<MyApp> {
   }
 
   @override
+  void dispose() {
+    _authenticationBloc.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocProvider<AuthenticationBloc>(
       create: (context) => _authenticationBloc,
